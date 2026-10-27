@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Header from './components/Header'
 import LeagueNav from './components/LeagueNav'
+import StandingsTable from './components/StandingsTable'
 import { leagues } from './data/leagues'
 
 function App() {
@@ -11,9 +12,7 @@ function App() {
       <Header />
       <div className="p-6">
         <LeagueNav leagues={leagues} active={activeLeague} onSelect={setActiveLeague} />
-        <p className="mt-4 text-slate-600">
-          Liga seleccionada: <strong className="text-slate-900">{activeLeague}</strong>
-        </p>
+        <StandingsTable leagueId={activeLeague} />
       </div>
     </div>
   )
