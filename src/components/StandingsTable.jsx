@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { fetchStandings } from '../services/api'
+import TeamSchedule from './TeamSchedule'
 
 function StandingsTable({ leagueId }) {
   const [standings, setStandings] = useState([])
   const [status, setStatus] = useState('loading')
   const [showAll, setShowAll] = useState(false)
+  const [selectedTeam, setSelectedTeam] = useState(null)
 
   useEffect(() => {
     let cancelled = false
@@ -24,6 +26,7 @@ function StandingsTable({ leagueId }) {
 
     // Reset view when league changes
     setShowAll(false)
+    setSelectedTeam(null)
 
     load()
 
@@ -58,8 +61,15 @@ function StandingsTable({ leagueId }) {
           </tr>
         </thead>
         <tbody>
-          {displayedStandings.map((team) => (
-            <tr key={team.name} className="border-t border-slate-200">
+        {displayedStandings.map((team) => (
+          <tr
+            key={team.name}
+            onClick={() => {
+              console.log('Equipo pulsado:', team.name, 'teamId:', team.teamId)
+              setSelectedTeam(team)
+            }}
+            className="border-t border-slate-200 cursor-pointer hover:bg-slate-50"
+          >
               <td
                 className="p-2"
                 style={{ borderLeftWidth: 4, borderLeftColor: team.zoneColor }}
@@ -87,6 +97,10 @@ function StandingsTable({ leagueId }) {
         >
           {showAll ? 'Mostrar menos' : 'Mostrar más'}
         </button>
+      )}
+
+      {selectedTeam && (
+        <TeamSchedule leagueId={leagueId} teamId={selectedTeam.teamId} />
       )}
     </div>
   )
