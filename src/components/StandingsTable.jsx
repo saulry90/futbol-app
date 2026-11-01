@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { fetchStandings } from '../services/api'
 import TeamSchedule from './TeamSchedule'
 
@@ -62,14 +62,13 @@ function StandingsTable({ leagueId }) {
         </thead>
         <tbody>
         {displayedStandings.map((team) => (
-          <tr
-            key={team.name}
-            onClick={() => {
-              console.log('Equipo pulsado:', team.name, 'teamId:', team.teamId)
-              setSelectedTeam(team)
-            }}
-            className="border-t border-slate-200 cursor-pointer hover:bg-slate-50"
-          >
+          <Fragment key={team.teamId}>
+            <tr
+              onClick={() => {
+                setSelectedTeam((prev) => (prev?.teamId === team.teamId ? null : team))
+              }}
+              className="border-t border-slate-200 cursor-pointer hover:bg-slate-50"
+            >
               <td
                 className="p-2"
                 style={{ borderLeftWidth: 4, borderLeftColor: team.zoneColor }}
@@ -87,7 +86,18 @@ function StandingsTable({ leagueId }) {
               <td className="p-2 text-center">{team.goalDifference}</td>
               <td className="p-2 text-right font-bold">{team.points}</td>
             </tr>
-          ))}
+
+            {selectedTeam?.teamId === team.teamId && (
+              <tr>
+                <td colSpan={8} className="p-0">
+                  <div className="p-3 bg-slate-50">
+                    <TeamSchedule leagueId={leagueId} teamId={team.teamId} />
+                  </div>
+                </td>
+              </tr>
+            )}
+          </Fragment>
+        ))}
         </tbody>
       </table>
       {standings.length > 5 && (
@@ -97,10 +107,6 @@ function StandingsTable({ leagueId }) {
         >
           {showAll ? 'Mostrar menos' : 'Mostrar más'}
         </button>
-      )}
-
-      {selectedTeam && (
-        <TeamSchedule leagueId={leagueId} teamId={selectedTeam.teamId} />
       )}
     </div>
   )

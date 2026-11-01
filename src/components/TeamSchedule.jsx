@@ -1,6 +1,26 @@
 import { useEffect, useState } from 'react'
 import { fetchTeamSchedule } from '../services/api'
 
+function getResultColor(ourScore, oppScore) {
+  if (ourScore == null || oppScore == null) return ''
+  if (Number(ourScore) > Number(oppScore)) return 'text-green-600'
+  if (Number(ourScore) < Number(oppScore)) return 'text-red-600'
+  return 'text-slate-600'
+}
+
+function formatDate(dateString) {
+  const date = new Date(dateString)
+
+  if (Number.isNaN(date.getTime())) return dateString
+
+  return date.toLocaleString('es-ES', {
+    day: '2-digit',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
 function TeamSchedule({ leagueId, teamId }) {
   const [matches, setMatches] = useState([])
   const [status, setStatus] = useState('loading')
@@ -42,9 +62,9 @@ function TeamSchedule({ leagueId, teamId }) {
       <ul className="mt-2 space-y-1">
         {matches.map((match, index) => (
           <li key={index} className="border-t border-slate-200 py-2 text-sm">
-            <span className="text-slate-500">{match.date}</span> — {match.homeAway === 'home' ? 'vs' : '@'} {match.opponent}{' '}
+            <span className="text-slate-500">{formatDate(match.date)}</span> — {match.homeAway === 'home' ? 'vs' : '@'} {match.opponent}{' '}
             {match.completed ? (
-              <span className="font-semibold">
+              <span className={`font-semibold ${getResultColor(match.ourScore, match.oppScore)}`}>
                 {match.ourScore} - {match.oppScore}
               </span>
             ) : (
