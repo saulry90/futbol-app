@@ -17,6 +17,7 @@ export function useStandings(leagueId) {
         setStatus('ready')
       } catch (error) {
         if (cancelled) return
+        console.error(error)
         setStatus('error')
       }
     }

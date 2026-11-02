@@ -12,7 +12,7 @@ function App() {
       <Header />
       <div className="p-6">
         <LeagueNav leagues={leagues} active={activeLeague} onSelect={setActiveLeague} />
-        <StandingsTable leagueId={activeLeague} />
+        <StandingsTable key={activeLeague} leagueId={activeLeague} />
       </div>
     </div>
   )

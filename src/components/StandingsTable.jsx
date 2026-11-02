@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import TeamSchedule from './TeamSchedule'
 import { useStandings } from '../hooks/useStandings'
 
@@ -6,11 +6,6 @@ function StandingsTable({ leagueId }) {
   const { standings, status } = useStandings(leagueId)
   const [showAll, setShowAll] = useState(false)
   const [selectedTeam, setSelectedTeam] = useState(null)
-
-  useEffect(() => {
-    setShowAll(false)
-    setSelectedTeam(null)
-  }, [leagueId])
 
   if (status === 'loading') {
     return <p>Cargando tabla...</p>

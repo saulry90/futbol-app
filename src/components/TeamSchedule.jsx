@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { formatDate, getResultColor } from '../utils/matchHelpers'
 import { useTeamSchedule } from '../hooks/useTeamSchedule'
 
