@@ -16,12 +16,10 @@ function formatDate(dateString) {
   return date.toLocaleString('es-ES', {
     day: '2-digit',
     month: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
   })
 }
 
-function TeamSchedule({ leagueId, teamId }) {
+function TeamSchedule({ leagueId, teamId, ourTeamName, ourTeamLogo }) {
   const [matches, setMatches] = useState([])
   const [status, setStatus] = useState('loading')
 
@@ -71,13 +69,39 @@ function TeamSchedule({ leagueId, teamId }) {
       <ul className="mt-2 space-y-1">
         {matches.map((match, index) => (
           <li key={index} className="border-t border-slate-200 py-2 text-sm">
-            <span className="text-slate-500">{formatDate(match.date)}</span> — {match.homeAway === 'home' ? 'vs' : '@'} {match.opponent}{' '}
-            {match.completed ? (
-              <span className={`font-semibold ${getResultColor(match.ourScore, match.oppScore)}`}>
-                {match.ourScore} - {match.oppScore}
+            <span className="text-slate-500">{formatDate(match.date)}</span> —{' '}
+            {match.homeAway === 'home' ? (
+              <span className="inline-flex items-center gap-1">
+                {ourTeamLogo && <img src={ourTeamLogo} alt={ourTeamName} className="h-4 w-4" />}
+                {ourTeamName}
+                {' '}
+                {match.completed ? (
+                  <span className={`font-semibold ${getResultColor(match.ourScore, match.oppScore)}`}>
+                    {match.ourScore} - {match.oppScore}
+                  </span>
+                ) : (
+                  <span className="text-slate-500">{match.status}</span>
+                )}
+                {' '}
+                {match.opponentLogo && <img src={match.opponentLogo} alt={match.opponent} className="h-4 w-4" />}
+                {match.opponent}
               </span>
             ) : (
-              <span className="text-slate-500">{match.status}</span>
+              <span className="inline-flex items-center gap-1">
+                {match.opponentLogo && <img src={match.opponentLogo} alt={match.opponent} className="h-4 w-4" />}
+                {match.opponent}
+                {' '}
+                {match.completed ? (
+                  <span className={`font-semibold ${getResultColor(match.ourScore, match.oppScore)}`}>
+                    {match.ourScore} - {match.oppScore}
+                  </span>
+                ) : (
+                  <span className="text-slate-500">{match.status}</span>
+                )}
+                {' '}
+                {ourTeamLogo && <img src={ourTeamLogo} alt={ourTeamName} className="h-4 w-4" />}
+                {ourTeamName}
+              </span>
             )}
           </li>
         ))}

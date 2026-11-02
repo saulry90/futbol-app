@@ -91,7 +91,12 @@ function StandingsTable({ leagueId }) {
               <tr>
                 <td colSpan={8} className="p-0">
                   <div className="p-3 bg-slate-50">
-                    <TeamSchedule leagueId={leagueId} teamId={team.teamId} />
+                    <TeamSchedule
+                      leagueId={leagueId}
+                      teamId={team.teamId}
+                      ourTeamName={team.name}
+                      ourTeamLogo={team.logo}
+                    />
                   </div>
                 </td>
               </tr>
