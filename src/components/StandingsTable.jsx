@@ -1,38 +1,15 @@
 import { Fragment, useEffect, useState } from 'react'
-import { fetchStandings } from '../services/api'
 import TeamSchedule from './TeamSchedule'
+import { useStandings } from '../hooks/useStandings'
 
 function StandingsTable({ leagueId }) {
-  const [standings, setStandings] = useState([])
-  const [status, setStatus] = useState('loading')
+  const { standings, status } = useStandings(leagueId)
   const [showAll, setShowAll] = useState(false)
   const [selectedTeam, setSelectedTeam] = useState(null)
 
   useEffect(() => {
-    let cancelled = false
-
-    async function load() {
-      setStatus('loading')
-      try {
-        const data = await fetchStandings(leagueId)
-        if (cancelled) return
-        setStandings(data)
-        setStatus('ready')
-      } catch (error) {
-        if (cancelled) return
-        setStatus('error')
-      }
-    }
-
-    // Reset view when league changes
     setShowAll(false)
     setSelectedTeam(null)
-
-    load()
-
-    return () => {
-      cancelled = true
-    }
   }, [leagueId])
 
   if (status === 'loading') {

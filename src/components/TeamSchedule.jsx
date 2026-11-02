@@ -1,33 +1,9 @@
 import { useEffect, useState } from 'react'
-import { fetchTeamSchedule } from '../services/api'
 import { formatDate, getResultColor } from '../utils/matchHelpers'
+import { useTeamSchedule } from '../hooks/useTeamSchedule'
 
 function TeamSchedule({ leagueId, teamId, ourTeamName, ourTeamLogo }) {
-  const [matches, setMatches] = useState([])
-  const [status, setStatus] = useState('loading')
-
-  useEffect(() => {
-    let cancelled = false
-
-    async function load() {
-      setStatus('loading')
-      try {
-        const data = await fetchTeamSchedule(leagueId, teamId)
-        if (cancelled) return
-        setMatches(data)
-        setStatus('ready')
-      } catch (error) {
-        if (cancelled) return
-        setStatus('error')
-      }
-    }
-
-    load()
-
-    return () => {
-      cancelled = true
-    }
-  }, [leagueId, teamId])
+  const { matches, status } = useTeamSchedule(leagueId, teamId)
 
   if (status === 'loading') {
     return <p>Cargando partidos...</p>
