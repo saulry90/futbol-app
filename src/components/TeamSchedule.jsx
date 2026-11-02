@@ -1,23 +1,6 @@
 import { useEffect, useState } from 'react'
 import { fetchTeamSchedule } from '../services/api'
-
-function getResultColor(ourScore, oppScore) {
-  if (ourScore == null || oppScore == null) return ''
-  if (Number(ourScore) > Number(oppScore)) return 'text-green-600'
-  if (Number(ourScore) < Number(oppScore)) return 'text-red-600'
-  return 'text-slate-600'
-}
-
-function formatDate(dateString) {
-  const date = new Date(dateString)
-
-  if (Number.isNaN(date.getTime())) return dateString
-
-  return date.toLocaleString('es-ES', {
-    day: '2-digit',
-    month: 'short',
-  })
-}
+import { formatDate, getResultColor } from '../utils/matchHelpers'
 
 function TeamSchedule({ leagueId, teamId, ourTeamName, ourTeamLogo }) {
   const [matches, setMatches] = useState([])
