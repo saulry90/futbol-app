@@ -56,6 +56,15 @@ function TeamSchedule({ leagueId, teamId }) {
     return <p>No se pudieron cargar los partidos.</p>
   }
 
+  if (matches.length === 0) {
+    return (
+      <div className="mt-4">
+        <h3 className="text-lg font-semibold">Últimos partidos</h3>
+        <p className="mt-2 text-sm text-slate-500">No hay partidos disponibles.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="mt-4">
       <h3 className="text-lg font-semibold">Últimos partidos</h3>
