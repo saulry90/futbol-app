@@ -48,8 +48,14 @@ function StandingsTable({ leagueId }) {
                 {team.position}
               </td>
               <td className="p-2">
-                <img src={team.logo} alt={team.name} className="mr-2 inline h-5 w-5" />
-                {team.name}
+                <button
+                  type="button"
+                  aria-expanded={selectedTeam?.teamId === team.teamId}
+                  className="text-left cursor-pointer"
+                >
+                  <img src={team.logo} alt="" className="mr-2 inline h-5 w-5" />
+                  {team.name}
+                </button>
               </td>
               <td className="p-2 text-center">{team.gamesPlayed}</td>
               <td className="p-2 text-center">{team.wins}</td>
