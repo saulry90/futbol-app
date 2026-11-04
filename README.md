@@ -1,6 +1,6 @@
 # ⚽ Fútbol Explorer
 
-Tablas de posiciones de las mejores ligas del mundo usando la API pública de ESPN. Al hacer clic en un equipo se despliegan sus últimos partidos.
+Tablas de posiciones de las mejores ligas del mundo usando la API pública de ESPN. Al hacer clic en un equipo se despliega un panel con pestañas: últimos partidos, próximos partidos (con hora) y estadísticas (pendiente).
 
 ## Requisitos
 
@@ -43,7 +43,8 @@ src/
 │   ├── Header.jsx          → encabezado de la app
 │   ├── LeagueNav.jsx       → tabs de selección de liga
 │   ├── StandingsTable.jsx  → tabla de posiciones
-│   └── TeamSchedule.jsx    → partidos de un equipo
+│   ├── TeamSchedule.jsx    → panel con pestañas de un equipo
+│   └── MatchList.jsx       → lista de partidos (últimos o próximos)
 ├── App.jsx                 → componente raíz, compone todo
 ├── main.jsx                → punto de entrada
 └── index.css               → carga de Tailwind CSS
