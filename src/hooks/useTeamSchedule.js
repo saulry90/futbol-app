@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { fetchTeamSchedule } from '../services/api'
 
-export function useTeamSchedule(leagueId, teamId) {
+export function useTeamSchedule(leagueId, teamId, type = 'past') {
   const [matches, setMatches] = useState([])
   const [status, setStatus] = useState('loading')
 
@@ -11,7 +11,7 @@ export function useTeamSchedule(leagueId, teamId) {
     async function load() {
       setStatus('loading')
       try {
-        const data = await fetchTeamSchedule(leagueId, teamId)
+        const data = await fetchTeamSchedule(leagueId, teamId, type)
         if (cancelled) return
         setMatches(data)
         setStatus('ready')
@@ -27,7 +27,7 @@ export function useTeamSchedule(leagueId, teamId) {
     return () => {
       cancelled = true
     }
-  }, [leagueId, teamId])
+  }, [leagueId, teamId, type])
 
   return { matches, status }
 }

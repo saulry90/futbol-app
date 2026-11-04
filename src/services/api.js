@@ -1,7 +1,9 @@
-const BASE_URL = 'https://site.web.api.espn.com/apis/v2/sports/soccer'
+const API_ROOT = 'https://site.web.api.espn.com/apis'
+const STANDINGS_URL = `${API_ROOT}/v2/sports/soccer`
+const SITE_URL = `${API_ROOT}/site/v2/sports/soccer`
 
 export async function fetchStandings(leagueId) {
-  const response = await fetch(`${BASE_URL}/${leagueId}/standings`)
+  const response = await fetch(`${STANDINGS_URL}/${leagueId}/standings`)
   if (!response.ok) {
     throw new Error(`Error ${response.status} al obtener la tabla`)
   }
@@ -32,8 +34,10 @@ export async function fetchStandings(leagueId) {
   })
 }
 
-export async function fetchTeamSchedule(leagueId, teamId) {
-  const response = await fetch(`https://site.web.api.espn.com/apis/site/v2/sports/soccer/${leagueId}/teams/${teamId}/schedule`)
+// type: 'past' (partidos jugados) o 'upcoming' (partidos por jugar)
+export async function fetchTeamSchedule(leagueId, teamId, type = 'past') {
+  const query = type === 'upcoming' ? '?fixture=true' : ''
+  const response = await fetch(`${SITE_URL}/${leagueId}/teams/${teamId}/schedule${query}`)
   if (!response.ok) {
     throw new Error(`Error ${response.status} al obtener el calendario`)
   }
@@ -54,6 +58,7 @@ export async function fetchTeamSchedule(leagueId, teamId) {
       ourScore: ourTeam?.score?.displayValue,
       oppScore: opponent?.score?.displayValue,
       completed: competition.status.type.completed,
+      state: competition.status.type.state,
       status: competition.status.type.description,
     }
   })
