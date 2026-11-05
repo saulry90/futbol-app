@@ -4,7 +4,6 @@ import { useStandings } from '../hooks/useStandings'
 
 function StandingsTable({ leagueId }) {
   const { standings, status } = useStandings(leagueId)
-  const [showAll, setShowAll] = useState(false)
   const [selectedTeam, setSelectedTeam] = useState(null)
 
   if (status === 'loading') {
@@ -14,8 +13,6 @@ function StandingsTable({ leagueId }) {
   if (status === 'error') {
     return <p>No se pudo cargar la tabla. Inténtalo más tarde.</p>
   }
-
-  const displayedStandings = showAll ? standings : standings.slice(0, 5)
 
   return (
     <div>
@@ -33,7 +30,7 @@ function StandingsTable({ leagueId }) {
           </tr>
         </thead>
         <tbody>
-        {displayedStandings.map((team) => (
+        {standings.map((team) => (
           <Fragment key={team.teamId}>
             <tr
               onClick={() => {
@@ -83,14 +80,6 @@ function StandingsTable({ leagueId }) {
         ))}
         </tbody>
       </table>
-      {standings.length > 5 && (
-        <button
-          onClick={() => setShowAll(!showAll)}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          {showAll ? 'Mostrar menos' : 'Mostrar más'}
-        </button>
-      )}
     </div>
   )
 }
