@@ -1,6 +1,17 @@
 import { Fragment, useState } from 'react'
 import TeamSchedule from './TeamSchedule'
 import { useStandings } from '../hooks/useStandings'
+import { zoneStyles } from '../data/zones'
+
+// Nombre y color de la zona de un equipo: los nuestros si la conocemos,
+// y si no, los que manda ESPN
+function getZone(team) {
+  const known = zoneStyles[team.zone]
+  return {
+    label: known?.label ?? team.zone,
+    color: known?.color ?? team.zoneColor,
+  }
+}
 
 function StandingsTable({ leagueId }) {
   const { standings, status } = useStandings(leagueId)
@@ -13,6 +24,14 @@ function StandingsTable({ leagueId }) {
   if (status === 'error') {
     return <p>No se pudo cargar la tabla. Inténtalo más tarde.</p>
   }
+
+  const zones = new Map()
+  standings.forEach((team) => {
+    const { label, color } = getZone(team)
+    if (team.zone && !zones.has(label)) {
+      zones.set(label, color)
+    }
+  })
 
   return (
     <div>
@@ -40,7 +59,7 @@ function StandingsTable({ leagueId }) {
             >
               <td
                 className="p-2"
-                style={{ borderLeftWidth: 4, borderLeftColor: team.zoneColor }}
+                style={{ borderLeftWidth: 4, borderLeftColor: getZone(team).color }}
               >
                 {team.position}
               </td>
@@ -80,6 +99,20 @@ function StandingsTable({ leagueId }) {
         ))}
         </tbody>
       </table>
+      {zones.size > 0 && (
+        <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-600">
+          {[...zones].map(([name, color]) => (
+            <li key={name} className="flex items-center gap-2">
+              <span
+                aria-hidden="true"
+                className="h-3 w-3 rounded-sm"
+                style={{ backgroundColor: color }}
+              />
+              {name}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
