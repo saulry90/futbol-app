@@ -36,13 +36,14 @@ src/
 │   ├── useStandings.js     → carga la tabla de una liga
 │   └── useTeamSchedule.js  → carga los partidos de un equipo
 ├── data/
-│   └── leagues.js          → las 5 ligas (datos separados de la UI)
+│   ├── leagues.js          → las 5 ligas (datos separados de la UI)
+│   └── zones.js            → nombres y colores de las zonas de la tabla
 ├── utils/
 │   └── matchHelpers.js     → formato de fechas y color del resultado
 ├── components/
 │   ├── Header.jsx          → encabezado de la app
 │   ├── LeagueNav.jsx       → tabs de selección de liga
-│   ├── StandingsTable.jsx  → tabla de posiciones
+│   ├── StandingsTable.jsx  → tabla de posiciones y leyenda de zonas
 │   ├── TeamSchedule.jsx    → panel con pestañas de un equipo
 │   └── MatchList.jsx       → lista de partidos (últimos o próximos)
 ├── App.jsx                 → componente raíz, compone todo
