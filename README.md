@@ -25,6 +25,7 @@ En la terminal donde corre `npm run dev`, presiona `Ctrl + C`.
 - `npm run build`: genera la versión de producción
 - `npm run preview`: sirve localmente la versión generada
 - `npm run lint`: revisa el código con oxlint
+- `npm test`: ejecuta los tests (`node --test`)
 
 ## Estructura del proyecto
 
@@ -39,7 +40,8 @@ src/
 │   ├── leagues.js          → las 5 ligas (datos separados de la UI)
 │   └── zones.js            → nombres y colores de las zonas de la tabla
 ├── utils/
-│   └── matchHelpers.js     → formato de fechas y color del resultado
+│   ├── matchHelpers.js     → formato de fechas y color del resultado
+│   └── matchHelpers.test.js → tests de matchHelpers
 ├── components/
 │   ├── Header.jsx          → encabezado de la app
 │   ├── LeagueNav.jsx       → tabs de selección de liga
