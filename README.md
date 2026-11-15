@@ -41,7 +41,9 @@ src/
 │   └── zones.js            → nombres y colores de las zonas de la tabla
 ├── utils/
 │   ├── matchHelpers.js     → formato de fechas y color del resultado
-│   └── matchHelpers.test.js → tests de matchHelpers
+│   ├── matchHelpers.test.js → tests de matchHelpers
+│   ├── zoneHelpers.js      → reglas que corrigen las zonas de ESPN
+│   └── zoneHelpers.test.js → tests de zoneHelpers
 ├── components/
 │   ├── Header.jsx          → encabezado de la app
 │   ├── LeagueNav.jsx       → tabs de selección de liga
