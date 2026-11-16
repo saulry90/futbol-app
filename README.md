@@ -32,7 +32,8 @@ En la terminal donde corre `npm run dev`, presiona `Ctrl + C`.
 ```
 src/
 ├── services/
-│   └── api.js              → llamadas a la API de ESPN
+│   ├── api.js              → llamadas a la API de ESPN
+│   └── api.test.js         → tests de fetchStandings (con fetch simulado)
 ├── hooks/
 │   ├── useStandings.js     → carga la tabla de una liga
 │   └── useTeamSchedule.js  → carga los partidos de un equipo
